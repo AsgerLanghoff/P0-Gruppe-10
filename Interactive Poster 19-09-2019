@@ -1,0 +1,113 @@
+//GlobalVariables
+float swipeMouseX = 0;
+float swipeMouseY = 0;
+PImage tinderImage;
+float frameX, frameY, frameHeight, frameWidth;
+boolean unlock = false;
+boolean swipeActive = false;
+float copyFrameX = 1000;
+float copyFrameY = 0;
+float moveSpeedHorizontal = 0;
+float moveSpeedVertical = 0;
+
+
+
+void setup()
+{
+  size(594, 841); 
+  background(255);
+  noStroke();
+  fill(0);
+  rectMode(CENTER);
+  rect(width/2, 400, 50, 50);
+  tinderImage = loadImage("Tinder image template.png");
+  frameX = width/2;
+  frameY = height/2.5;
+  frameHeight = height/1.5;
+  frameWidth = height/1.75;
+}
+void draw()
+{
+  image (tinderImage, 0, 0, width, height-50);
+  /*  if (swipeActive == true)
+   {
+   fill(255, 0, 0);
+   rect(0, 0, 50, 50);
+   }
+   else
+   {
+   fill(0, 255, 0);
+   rect(0, 0, 50, 50);
+   }*/
+  rect(width/2, height/2.5, frameWidth, frameHeight);     //fake frame
+  rectMode(CENTER);
+  rect(frameX, frameY, frameWidth, frameHeight);     //frame1
+  loop();
+
+  rect(copyFrameX, copyFrameY, frameWidth, frameHeight);  //copy frame DISLIKE
+  copyFrameX=copyFrameX+moveSpeedHorizontal;
+  copyFrameY=copyFrameY+moveSpeedVertical;
+}
+void mousePressed()
+{
+  swipeMouseX = mouseX-(frameX);
+  swipeMouseY = mouseY-(frameY);
+  if ((mouseX > frameX-(frameWidth/2)) && (mouseX < frameX+(frameWidth/2)) && (mouseY > frameY-(frameHeight/2)) && (mouseY < frameY+(frameHeight/2)))  
+  {
+    //fill(0);
+    //rect(mouseX, mouseY, 50, 50); 
+    swipeActive = true;
+  }
+}
+void mouseDragged()
+{
+  if (swipeActive == true)
+  {
+    //fill(0);
+    //rect(mouseX, mouseY, 50, 50);
+    frameX = mouseX-swipeMouseX;
+    frameY = mouseY-swipeMouseY;
+  }
+}
+void mouseReleased()
+{
+  copyFrameX = frameX;
+  copyFrameY = frameY;
+  if ((frameX <= width/4) && (swipeActive == true))
+  {
+    fill(255, 255, 0);
+    rect(0, height-50, 50, 50);
+    frameX = width/2;
+    frameY = height/2.5;
+    moveSpeedHorizontal = -25;
+    moveSpeedVertical = 0;
+  }
+  if ((frameX >= ((width/4)*3)) && (swipeActive == true))
+  {
+    fill(0, 0, 255);
+    rect(0, height-50, 50, 50);
+    frameX = width/2;
+    frameY = height/2.5;
+    moveSpeedHorizontal = 25;
+    moveSpeedVertical = 0;
+  }
+  if ((frameY <= height/5) && (swipeActive == true))
+  {
+    fill(0, 255, 0);
+    rect(0, height-50, 50, 50);
+    frameX = width/2;
+    frameY = height/2.5;
+    moveSpeedHorizontal = 0;
+    moveSpeedVertical = -25;
+  } else
+  {
+    fill(0);
+    moveSpeedHorizontal = 0;
+    moveSpeedVertical = 0;
+    frameX = width/2;
+    frameY = height/2.5;
+    copyFrameX = width/2;
+    copyFrameY = height/2.5;
+  }
+  swipeActive = false;
+}
