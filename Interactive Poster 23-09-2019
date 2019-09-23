@@ -1,0 +1,360 @@
+//GlobalVariables
+int value = 0;
+
+float swipeMouseX = 0;
+float swipeMouseY = 0;
+PImage backgroundImage1;
+PImage image1, image2, image3, image4, image5, image6, image7, image8, image9;
+float frameX, frameY, frameHeight, frameWidth;
+boolean unlock = false;
+boolean swipeActive = false;
+float copyFrameX = 1000;
+float copyFrameY = 0;
+float moveSpeedHorizontal = 0;
+float moveSpeedVertical = 0;
+int stage=0;
+boolean posterActive=false;
+
+boolean question1=false;
+boolean question2=false;
+boolean question3=false;
+boolean question4=false;
+boolean question5=false;
+boolean question6=false;
+boolean question7=false;
+boolean question8=false;
+boolean question9=false;
+
+
+void setup()
+{
+  size(594, 841); 
+  background(255);
+  noStroke();
+  fill(0);
+  rectMode(CENTER);
+  rect(width/2, 400, 50, 50);
+  backgroundImage1 = loadImage("image1.png");
+  image1=loadImage("1.png");
+  image2=loadImage("2.png");
+  image3=loadImage("3.png");
+  image4=loadImage("4.png");
+  image5=loadImage("5.png");
+  image6=loadImage("6.png");
+  image7=loadImage("7.png");
+  image8=loadImage("8.png");
+  image9=loadImage("9.png");
+  frameX = width/2;
+  frameY = height/2.5;
+  frameHeight = height/1.5;
+  frameWidth = height/1.75;
+}
+void draw()
+{
+  println(stage);
+  image (backgroundImage1, 0, 0);
+  /*  if (swipeActive == true)
+   {
+   fill(255, 0, 0);
+   rect(0, 0, 50, 50);
+   }
+   else
+   {
+   fill(0, 255, 0);
+   rect(0, 0, 50, 50);
+   }*/
+  rect(copyFrameX, copyFrameY, frameWidth, frameHeight);  //copy frame DISLIKE
+  copyFrameX=copyFrameX+moveSpeedHorizontal;
+  copyFrameY=copyFrameY+moveSpeedVertical;
+  if (stage==0) {
+    image(image1, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==1) {
+    image(image1, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==2) {
+    image(image2, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==3) {
+    image(image3, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==4) {
+    image(image4, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==5) {
+    image(image5, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==6) {
+    image(image6, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==7) {
+    image(image7, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==8) {
+    image(image8, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==9) {
+    image(image9, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  }
+  rect(width/2, height/2.5, frameWidth, frameHeight);  //Secondary Frame
+  if (stage==0) {
+    image(image2, width/2-frameWidth/2, height/2.5-frameHeight/2 );     //checks which stage the user is at at loads the corresponding images
+  } else if (stage==1) {
+    image(image3, width/2-frameWidth/2, height/2.5-frameHeight/2 );     //checks which stage the user is at at loads the corresponding images
+  } else if (stage==2) {
+    image(image4, width/2-frameWidth/2, height/2.5-frameHeight/2 );     //checks which stage the user is at at loads the corresponding images
+  } else if (stage==3) {
+    image(image5, width/2-frameWidth/2, height/2.5-frameHeight/2 );     //checks which stage the user is at at loads the corresponding images
+  } else if (stage==4) {
+    image(image6, width/2-frameWidth/2, height/2.5-frameHeight/2 );     //checks which stage the user is at at loads the corresponding images
+  } else if (stage==5) {
+    image(image7, width/2-frameWidth/2, height/2.5-frameHeight/2 );     //checks which stage the user is at at loads the corresponding images
+  } else if (stage==6) {
+    image(image8, width/2-frameWidth/2, height/2.5-frameHeight/2 );     //checks which stage the user is at at loads the corresponding images
+  } else if (stage==7) {
+    image(image9, width/2-frameWidth/2, height/2.5-frameHeight/2 );     //checks which stage the user is at at loads the corresponding images
+  } else if (stage==8) {
+    fill(0);
+    //rect(width/2, height/2.5, frameWidth, frameHeight);     //checks which stage the user is at at loads the corresponding images
+    fill(0, 0, 0, 0);
+  } else if (stage>=9) {
+    fill(0);
+    rect(width/2, height/2, width, height);
+    if (question1)
+    {
+      fill(255);
+      textSize(32);
+      text("question1 true", 10, 30);
+    } else {
+      fill(255);
+      textSize(32);
+      text("question1 false", 10, 30);
+    }
+        if (question2)
+    {
+      fill(255);
+      textSize(32);
+      text("question2 true", 10, 60);
+    } else {
+      fill(255);
+      textSize(32);
+      text("question2 false", 10, 60);
+    }
+        if (question3)
+    {
+      fill(255);
+      textSize(32);
+      text("question3 true", 10, 90);
+    } else {
+      fill(255);
+      textSize(32);
+      text("question3 false", 10, 90);
+    }
+        if (question4)
+    {
+      fill(255);
+      textSize(32);
+      text("question4 true", 10, 120);
+    } else {
+      fill(255);
+      textSize(32);
+      text("question4 false", 10, 120);
+    }
+        if (question5)
+    {
+      fill(255);
+      textSize(32);
+      text("question5 true", 10, 150);
+    } else {
+      fill(255);
+      textSize(32);
+      text("question5 false", 10, 150);
+    }
+        if (question6)
+    {
+      fill(255);
+      textSize(32);
+      text("question6 true", 10, 180);
+    } else {
+      fill(255);
+      textSize(32);
+      text("question6 false", 10, 180);
+    }
+        if (question7)
+    {
+      fill(255);
+      textSize(32);
+      text("question7 true", 10, 210);
+    } else {
+      fill(255);
+      textSize(32);
+      text("question7 false", 10, 210);
+    }
+        if (question8)
+    {
+      fill(255);
+      textSize(32);
+      text("question8 true", 10, 240);
+    } else {
+      fill(255);
+      textSize(32);
+      text("question8 false", 10, 240);
+    }
+        if (question9)
+    {
+      fill(255);
+      textSize(32);
+      text("question9 true", 10, 270);
+    } else {
+      fill(255);
+      textSize(32);
+      text("question9 false", 10, 270);
+    }
+    fill(0, 0, 0, 0);
+  }
+
+  rectMode(CENTER);
+  rect(frameX, frameY, frameWidth, frameHeight);                      //Primary Frame
+  if (stage==0) {
+    image(image1, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==1) {
+    image(image2, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==2) {
+    image(image3, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==3) {
+    image(image4, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==4) {
+    image(image5, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==5) {
+    image(image6, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==6) {
+    image(image7, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==7) {
+    image(image8, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==8) {
+    image(image9, frameX-frameWidth/2, frameY-frameHeight/2 );
+  }
+
+  if (posterActive ==false) {
+    fill(0, 0, 0, 200);
+    rect(width/2, height/2, width, height);
+    fill(0, 0, 0, 0);
+  }
+}
+void mousePressed()
+{
+  if (posterActive==true)
+  {
+    swipeMouseX = mouseX-(frameX);
+    swipeMouseY = mouseY-(frameY);
+    if ((mouseX > frameX-(frameWidth/2)) && (mouseX < frameX+(frameWidth/2)) && (mouseY > frameY-(frameHeight/2)) && (mouseY < frameY+(frameHeight/2)))  
+    {
+      //fill(0);
+      //rect(mouseX, mouseY, 50, 50); 
+      swipeActive = true;
+    }
+  }
+}
+void mouseDragged()
+{
+  if (swipeActive == true)
+  {
+    //fill(0);
+    //rect(mouseX, mouseY, 50, 50);
+    frameX = mouseX-swipeMouseX;
+    frameY = mouseY-swipeMouseY;
+  }
+}
+void mouseReleased()
+{
+  if (posterActive==true) {
+    copyFrameX = frameX;
+    copyFrameY = frameY;   
+    if ((frameX <= width/4) && (swipeActive == true))
+    {
+      //fill(255, 255, 0);
+      //rect(0, height-50, 50, 50);
+      frameX = width/2;
+      frameY = height/2.5;
+      moveSpeedHorizontal = -25;
+      moveSpeedVertical = 0;
+      stage=stage+1;
+    } else if ((frameX >= ((width/4)*3)) && (swipeActive == true))
+    {
+      //fill(0, 0, 255);
+      //rect(0, height-50, 50, 50);
+      frameX = width/2;
+      frameY = height/2.5;
+      moveSpeedHorizontal = 25;
+      moveSpeedVertical = 0;
+      if (stage==0) {
+        question1=true;
+      }
+      if (stage==1) {
+        question2=true;
+      }
+      if (stage==2) {
+        question3=true;
+      }
+      if (stage==3) {
+        question4=true;
+      }
+      if (stage==4) {
+        question5=true;
+      }
+      if (stage==5) {
+        question6=true;
+      }
+      if (stage==6) {
+        question7=true;
+      }
+      if (stage==7) {
+        question8=true;
+      }
+      if (stage==8) {
+        question9=true;
+      }
+      stage=stage+1;
+    } else if ((frameY <= height/5) && (swipeActive == true))
+    {
+      //fill(0, 255, 0);
+      //rect(0, height-50, 50, 50);
+      frameX = width/2;
+      frameY = height/2.5;
+      moveSpeedHorizontal = 0;
+      moveSpeedVertical = -25;
+      if (stage==0) {
+        question1=true;
+      }
+      if (stage==1) {
+        question2=true;
+      }
+      if (stage==2) {
+        question3=true;
+      }
+      if (stage==3) {
+        question4=true;
+      }
+      if (stage==4) {
+        question5=true;
+      }
+      if (stage==5) {
+        question6=true;
+      }
+      if (stage==6) {
+        question7=true;
+      }
+      if (stage==7) {
+        question8=true;
+      }
+      if (stage==8) {
+        question9=true;
+      }
+      stage=stage+1;
+    } else
+    {
+      //fill(0);
+      moveSpeedHorizontal = 0;
+      moveSpeedVertical = 0;
+      frameX = width/2;
+      frameY = height/2.5;
+      copyFrameX = width/2;
+      copyFrameY = height/2.5;
+    }
+    swipeActive = false;
+  } else
+  {
+    posterActive=true;
+  }
+}
