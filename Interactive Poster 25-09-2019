@@ -1,0 +1,497 @@
+//GlobalVariables
+int value = 0;
+
+float swipeMouseX = 0;
+float swipeMouseY = 0;
+PFont arial;
+PImage backgroundImage1;
+PImage image1, image2, image3, image4, image5, image6, image7, image8, image9;
+float frameX, frameY, frameHeight, frameWidth;
+boolean unlock = false;
+boolean swipeActive = false;
+float copyFrameX = 1000;
+float copyFrameY = 0;
+float moveSpeedHorizontal = 0;
+float moveSpeedVertical = 0;
+int stage=0;
+boolean posterActive=false;
+boolean question1=false;
+boolean question2=false;
+boolean question3=false;
+boolean question4=false;
+boolean question5=false;
+boolean question6=false;
+boolean question7=false;
+boolean question8=false;
+boolean question9=false;
+
+boolean restarting=false;
+
+float buttonLikeX=0;
+float buttonLikeY=0;
+float buttonLikeWidth=0;
+float buttonLikeHeight=0;
+
+float buttonDislikeX=0;
+float buttonDislikeY=0;
+float buttonDislikeWidth=0;
+float buttonDislikeHeight=0;
+
+float buttonSuperX=0;
+float buttonSuperY=0;
+float buttonSuperWidth=0;
+float buttonSuperHeight=0;
+
+
+void setup()
+{
+  size(594, 841);                                 //resolution of the poster. A0 format but downscaled. (Everything but images and text size are scalable)
+  //background(255);
+  noStroke();                                     //proster uses many fully transparent boxes. globally not drawing strokes are prefered
+  fill(0);
+  rectMode(CENTER);
+  //  textAlign(CENTER);
+  //  textSize(64);
+  //  text("Loading...", width/2, height/2);          //optional Loading text before loading images (barely noticable on optimally performing computer)
+  backgroundImage1 = loadImage("image1.png");      //preloads all images and fonts used in the poster
+  image1=loadImage("1.png");
+  image2=loadImage("2.png");
+  image3=loadImage("3.png");
+  image4=loadImage("4.png");
+  image5=loadImage("5.png");
+  image6=loadImage("6.png");
+  image7=loadImage("7.png");
+  image8=loadImage("8.png");
+  image9=loadImage("9.png");
+  arial=loadFont("ArialMT-48.vlw");
+  textFont(arial);
+  frameX = width/2;                                  //frame X and Y positions
+  frameY = height/2.5;
+  frameHeight = height/1.5;                          //frame Height and Length sizes
+  frameWidth = height/1.75;
+
+  buttonLikeX=(width/4)*3;
+  buttonLikeY=(height/5)*4;
+  buttonLikeWidth=height/8;
+  buttonLikeHeight=height/8;
+
+  buttonDislikeX=width/4;
+  buttonDislikeY=(height/5)*4;
+  buttonDislikeWidth=height/8;
+  buttonDislikeHeight=height/8;
+
+  buttonSuperX=width/2;
+  buttonSuperY=(height/5)*4;
+  buttonSuperWidth=height/12;
+  buttonSuperHeight=height/12;
+}
+void draw()
+{
+  //println(stage);
+  image (backgroundImage1, 0, 0);
+  /*  if (swipeActive == true)
+   {
+   fill(255, 0, 0);
+   rect(0, 0, 50, 50);
+   }
+   else
+   {
+   fill(0, 255, 0);
+   rect(0, 0, 50, 50);
+   }*/
+  rect(copyFrameX, copyFrameY, frameWidth, frameHeight);  //copy frame DISLIKE
+  fill(255, 0, 0);
+  rect(buttonLikeX, buttonLikeY, buttonLikeWidth, buttonLikeHeight);  //like button
+  rect(buttonDislikeX, buttonDislikeY, buttonDislikeWidth, buttonDislikeHeight);  //dislike button
+  rect(buttonSuperX, buttonSuperY, buttonSuperWidth, buttonSuperHeight);  //super like button
+  fill(0, 0, 0, 0);
+  copyFrameX=copyFrameX+moveSpeedHorizontal;
+  copyFrameY=copyFrameY+moveSpeedVertical;
+  if (stage==0) {
+    image(image1, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==1) {
+    image(image1, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==2) {
+    image(image2, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==3) {
+    image(image3, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==4) {
+    image(image4, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==5) {
+    image(image5, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==6) {
+    image(image6, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==7) {
+    image(image7, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==8) {
+    image(image8, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  } else if (stage==9) {
+    image(image9, copyFrameX-frameWidth/2, copyFrameY-frameHeight/2);
+  }
+  rect(width/2, height/2.5, frameWidth, frameHeight);  //Secondary Frame
+  if (stage==0) {
+    image(image2, width/2-frameWidth/2, height/2.5-frameHeight/2 );     //checks which stage the user is at at loads the corresponding images
+  } else if (stage==1) {
+    image(image3, width/2-frameWidth/2, height/2.5-frameHeight/2 );
+  } else if (stage==2) {
+    image(image4, width/2-frameWidth/2, height/2.5-frameHeight/2 );
+  } else if (stage==3) {
+    image(image5, width/2-frameWidth/2, height/2.5-frameHeight/2 );
+  } else if (stage==4) {
+    image(image6, width/2-frameWidth/2, height/2.5-frameHeight/2 );
+  } else if (stage==5) {
+    image(image7, width/2-frameWidth/2, height/2.5-frameHeight/2 );
+  } else if (stage==6) {
+    image(image8, width/2-frameWidth/2, height/2.5-frameHeight/2 );
+  } else if (stage==7) {
+    image(image9, width/2-frameWidth/2, height/2.5-frameHeight/2 );
+  } else if (stage==8) {
+    fill(0);
+    //rect(width/2, height/2.5, frameWidth, frameHeight);     //checks which stage the user is at at loads the corresponding images
+    fill(0, 0, 0, 0);
+  } else if (stage>8) {
+    image (backgroundImage1, 0, 0);
+    fill(33, 26, 82, 220);
+    rect(width/2, height/2, width, height);
+    fill(255);
+    textSize(64); //" + "\n" + "
+    text("It's a Match!", width/2, (height/20)*2);
+    fill(100);
+    textSize(16);
+    text("Tryk for at genstarte", width/2, (height/20)*19.8);
+    if (question1)
+    {
+      fill(255);
+      textSize(18);
+      text("På Medialogi får du en masse baggrundsviden og tools som du i din" + "\n" + "fremtid kan bruge til senere hen arbejde inden for spiludvikling industrien.", width/2, (height/20)*3);
+    } else {
+      fill(255);
+      textSize(16);
+      text("På medialogi arbejder du ikke med spil eller spiludvikling i din skolegang," + "\n" + "der vil dog være elementer man ville kunne bruge til spil hvis man ville den vej.", width/2, (height/20)*3);
+    }
+    if (question2)
+    {
+      fill(255);
+      textSize(17);
+      text("Vi arbejder også meget med det visuelle på mange forskellige" + "\n" + "måder blandt andet at lave filmprojekt, modellere 3D objekter for at indsætte" + "\n" + "dem i video elementer, animation og meget andet.", width/2, (height/20)*5);
+    } else {
+      fill(255);
+      textSize(18);
+      text("Film kommer ikke til at være en stor del af medialogi, du vil dog" + "\n" + "lære elementer der ville kunne bruges inden for filmindustrien.", width/2, (height/20)*5);
+    }
+    if (question3)
+    {
+      fill(255);
+      textSize(16);
+      text("Grafisk design vil blive vist i gennem de fleste af de kurser man har på Medialogi." + "\n" + "Du vil blive vist hvordan man bruger det ift. spil, posters, animationer og meget mere.", width/2, (height/20)*7);
+    } else {
+      fill(255);
+      textSize(14);
+      text("Grafisk design er en stor del af uddannelse, da du bruger en masse forskellige aspekter i" + "\n" + "diverse kurser.Det er kunne for eksempel være i computerspil, posters, animationer og meget" + "\n" + "mere. Man kan derfor ikke komme udenom grafisk design indenfor medialogi uddannelsen.", width/2, (height/20)*7);
+    }
+    if (question4)
+    {
+      fill(255);
+      textSize(16);
+      text("Det hører med til uddannelsen at kunne begå sig i værktøjer, der kan bruges til" + "\n" + "3D modellering. 3D modellering er som oftest brugt i VR, video eller computerspil.", width/2, (height/20)*9);
+    } else {
+      fill(255);
+      textSize(16);
+      text("3D modellering er en af de mindre ting på uddannelsen, hvis 3D programmering ikke" + "\n" + "er din kop te er det helt okay, det er der masser af andre ting der vil være.", width/2, (height/20)*9);
+    }
+    if (question5)
+    {
+      fill(255);
+      textSize(16);
+      text("Programmering er en stor del af alle semestrene på uddannelsen." + "\n" + "Du vil lære hvordan du begår dig i programmerings programmer, som du fremtidigt" + "\n" + "kan bruge til alt fra computer programmer, apps og spil.", width/2, (height/20)*11);
+    } else {
+      fill(255);
+      textSize(15);
+      text("Da programmering er en stor del af uddannelsen, skal du forvente at bruge en masse" + "\n" + "tid på netop dette. Hvis matematik ikke er en af dine bedre fag, så kan du få det svært.", width/2, (height/20)*11);
+    }
+    if (question6)
+    {
+      fill(255);
+      textSize(18);
+      text("På AAU vægter gruppearbejde stort. Hvis du er glad for gruppearbejde," + "\n" + "så er dette universitetet for dig.", width/2, (height/20)*13);
+    } else {
+      fill(255);
+      textSize(18);
+      text("På AAU vægter gruppearbejde stort. Du skal derfor forvente at" + "\n" + "arbejde i grupper frem for at arbejde alene.", width/2, (height/20)*13);
+    }
+    if (question7)
+    {
+      fill(255);
+      textSize(15);
+      text("På medialogi er der meget praktisk arbejde. Oftest starter du med en forelæsning hvor" + "\n" + "du vil lære teoretiske dele af et projekt hvorefter du selv skal ned i mudderet" + "\n" + "og arbejde. Der vil være alt fra Virtual Reality til programmeringsarbejde.", width/2, (height/20)*14.5);
+    } else {
+      fill(255);
+      textSize(13);
+      text("Du vil på Medialogi se frem til at gå til en del forelæsninger hvorefter dine lektorer vil uploade slides" + "\n" + "du kan gå igennem derhjemme, der vil også være en del bøger du kan gå igennem for at opnå den" + "\n" + "viden du skal bruge til senere at arbejde med det praktisk i mindre doser når du har afleveringsfrister.", width/2, (height/20)*14.5);
+    }
+    if (question8)
+    {
+      fill(255);
+      textSize(18);
+      text("AAU ønsker hele tiden at fornye sig. Det kan du være med til ved" + "\n" + "at udvikle nye teknologier, der er med til at bane vejen til fremtiden.", width/2, (height/20)*16.5);
+    } else {
+      fill(255);
+      textSize(18);
+      text("Teknologi er en større del af uddannelsen, så hvis du er lige" + "\n" + "så teknisk anlagt som farmor Else, så er studiet nok ikke for dig.", width/2, (height/20)*16.5);
+    }
+    if (question9)
+    {
+      fill(255);
+      textSize(15);
+      text("Du vil af og til møde problemet at den software du har brug for i en bestemt situation ikke" + "\n" + "eksistere, her vil du virkelig få mulighed for at brilliere! Hjælp dig selv og andre med" + "\n" + "at udvikle vigtig software til fremtidens generation.", width/2, (height/20)*18);
+    } else {
+      fill(255);
+      textSize(14);
+      text("Der er en kæmpe stor sandsynlighed for at du gennem din bachelor og eventuelle kandidat" + "\n" + "på medialogi aldrig vil møde den del af studiet hvor du faktisk selv skal udvikle software," + "\n" + "på studiet har du rigtig mange forskellige redskaber til rådighed.", width/2, (height/20)*18);
+    }
+    fill(0, 0, 0, 0);
+  }
+
+  rectMode(CENTER);
+  rect(frameX, frameY, frameWidth, frameHeight);                      //Primary Frame
+  if (stage==0) {
+    image(image1, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==1) {
+    image(image2, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==2) {
+    image(image3, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==3) {
+    image(image4, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==4) {
+    image(image5, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==5) {
+    image(image6, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==6) {
+    image(image7, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==7) {
+    image(image8, frameX-frameWidth/2, frameY-frameHeight/2 );
+  } else if (stage==8) {
+    image(image9, frameX-frameWidth/2, frameY-frameHeight/2 );
+  }
+  if (posterActive ==false) {
+    fill(33, 26, 82, 220);
+    rect(width/2, height/2, width, height);
+    fill(255);
+    textAlign(CENTER);
+    textSize(48);
+    text("Swipe right to like", width/2, height/2);
+    text("and left to dislike", width/2, height/2+64);
+    textSize(64);
+    text("Press to begin!", width/2, (height/5)*4);
+    fill(0, 0, 0, 0);
+  }
+}
+void mousePressed()
+{
+  if (stage>8) {
+    //println("restart");
+    stage=0;
+    question1=false;
+    question2=false;
+    question3=false;
+    question4=false;
+    question5=false;
+    question6=false;
+    question7=false;
+    question8=false;
+    question9=false;
+    posterActive=false;
+    restarting=true;
+  }
+  if (posterActive==true)
+  {
+    swipeMouseX = mouseX-(frameX);
+    swipeMouseY = mouseY-(frameY);
+    if ((mouseX > frameX-(frameWidth/2)) && (mouseX < frameX+(frameWidth/2)) && (mouseY > frameY-(frameHeight/2)) && (mouseY < frameY+(frameHeight/2)))  
+    {
+      swipeActive = true;
+    }
+    if ((mouseX > buttonSuperX-(buttonSuperWidth/2)) && (mouseX < buttonSuperX+(buttonSuperWidth/2)) && (mouseY > buttonSuperY-(buttonSuperHeight/2)) && (mouseY < buttonSuperY+(buttonSuperHeight/2)))  
+    {
+      println("superlike");
+      if (stage==0) {
+        question1=true;
+      }
+      if (stage==1) {
+        question2=true;
+      }
+      if (stage==2) {
+        question3=true;
+      }
+      if (stage==3) {
+        question4=true;
+      }
+      if (stage==4) {
+        question5=true;
+      }
+      if (stage==5) {
+        question6=true;
+      }
+      if (stage==6) {
+        question7=true;
+      }
+      if (stage==7) {
+        question8=true;
+      }
+      if (stage==8) {
+        question9=true;
+      }
+      stage=stage+1;
+    }
+    if ((mouseX > buttonLikeX-(buttonLikeWidth/2)) && (mouseX < buttonLikeX+(buttonLikeWidth/2)) && (mouseY > buttonLikeY-(buttonLikeHeight/2)) && (mouseY < buttonLikeY+(buttonLikeHeight/2)))  
+    {
+      println("like");
+      if (stage==0) {
+        question1=true;
+      }
+      if (stage==1) {
+        question2=true;
+      }
+      if (stage==2) {
+        question3=true;
+      }
+      if (stage==3) {
+        question4=true;
+      }
+      if (stage==4) {
+        question5=true;
+      }
+      if (stage==5) {
+        question6=true;
+      }
+      if (stage==6) {
+        question7=true;
+      }
+      if (stage==7) {
+        question8=true;
+      }
+      if (stage==8) {
+        question9=true;
+      }
+      stage=stage+1;
+    }
+    if ((mouseX > buttonDislikeX-(buttonDislikeWidth/2)) && (mouseX < buttonDislikeX+(buttonDislikeWidth/2)) && (mouseY > buttonDislikeY-(buttonDislikeHeight/2)) && (mouseY < buttonDislikeY+(buttonDislikeHeight/2)))  
+    {
+      println("dislike");
+      stage=stage+1;
+    }
+  }
+  if (!posterActive && !restarting) {
+    posterActive=true;
+  }
+  restarting=false;
+}
+void mouseDragged()
+{
+  if (swipeActive == true)
+  {
+    //fill(0);
+    //rect(mouseX, mouseY, 50, 50);
+    frameX = mouseX-swipeMouseX;
+    frameY = mouseY-swipeMouseY;
+  }
+}
+void mouseReleased()
+{
+  if (posterActive==true) {
+    copyFrameX = frameX;
+    copyFrameY = frameY;   
+    if ((frameX <= width/4) && (swipeActive == true))                        //dislike by swiping
+    {
+      //fill(255, 255, 0);
+      //rect(0, height-50, 50, 50);
+      frameX = width/2;
+      frameY = height/2.5;
+      moveSpeedHorizontal = -25;
+      moveSpeedVertical = 0;
+      stage=stage+1;
+    } else if ((frameX >= ((width/4)*3)) && (swipeActive == true))          //like by swiping
+    {
+      //fill(0, 0, 255);
+      //rect(0, height-50, 50, 50);
+      frameX = width/2;
+      frameY = height/2.5;
+      moveSpeedHorizontal = 25;
+      moveSpeedVertical = 0;
+      if (stage==0) {
+        question1=true;
+      }
+      if (stage==1) {
+        question2=true;
+      }
+      if (stage==2) {
+        question3=true;
+      }
+      if (stage==3) {
+        question4=true;
+      }
+      if (stage==4) {
+        question5=true;
+      }
+      if (stage==5) {
+        question6=true;
+      }
+      if (stage==6) {
+        question7=true;
+      }
+      if (stage==7) {
+        question8=true;
+      }
+      if (stage==8) {
+        question9=true;
+      }
+      stage=stage+1;
+    } else if ((frameY <= height/5) && (swipeActive == true))          //superlike by swiping
+    {
+      //fill(0, 255, 0);
+      //rect(0, height-50, 50, 50);
+      frameX = width/2;
+      frameY = height/2.5;
+      moveSpeedHorizontal = 0;
+      moveSpeedVertical = -25;
+      if (stage==0) {
+        question1=true;
+      }
+      if (stage==1) {
+        question2=true;
+      }
+      if (stage==2) {
+        question3=true;
+      }
+      if (stage==3) {
+        question4=true;
+      }
+      if (stage==4) {
+        question5=true;
+      }
+      if (stage==5) {
+        question6=true;
+      }
+      if (stage==6) {
+        question7=true;
+      }
+      if (stage==7) {
+        question8=true;
+      }
+      if (stage==8) {
+        question9=true;
+      }
+      stage=stage+1;
+    } else
+    {
+      //fill(0);
+      moveSpeedHorizontal = 0;
+      moveSpeedVertical = 0;
+      frameX = width/2;
+      frameY = height/2.5;
+      copyFrameX = width/2;
+      copyFrameY = height/2.5;
+    }
+    swipeActive = false;
+  }
+}
